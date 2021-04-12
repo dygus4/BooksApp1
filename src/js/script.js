@@ -56,13 +56,13 @@
         //znajdź data-id
         const idBook = bookImage.getAttribute('data-id');
         //sprwdz czy ksiazka  nie zawiera id oraz nie zawieta favorite
-        if( bookImage.classList.contains(!classNames.books.favoriteBook)){
+        if(!favoriteBooks.includes(idBook) && bookImage.classList.contains(!classNames.books.favoriteBook)){
         //jeśli warunek prawdziy dodaj favorite
           bookImage.classList.add(classNames.books.favoriteBook);
           // jeśli warunek prawdziwy wyślij id do nowej tablicy
           favoriteBooks.push(idBook);
         // jeśli ksiazka zawiera id i zawiera favorite
-        } else if ( bookImage.classList.contains(classNames.books.favoriteBook)){
+        } else if (favoriteBooks.includes(idBook) && bookImage.classList.contains(classNames.books.favoriteBook)){
           //znajdź indeks w tej tablicy
           const indexOfidBook = favoriteBooks.indexOf(idBook);
           //usuń indeks znaleziony
