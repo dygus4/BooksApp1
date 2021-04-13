@@ -48,7 +48,7 @@
     const booksContainer = document.querySelector(select.containerOf.booksList);
     const booksImage =booksContainer.querySelectorAll(select.booksCover.images);
     //pętla po każdym booksImage
-    for (let bookImage of booksImage) {
+    for (const bookImage of booksImage) {
       //nasłuchiwacz uruchamiający dbclick i zatrzymujący domyślne zachowanie
       bookImage.addEventListener('dblclick', function(event){
         event.preventDefault();
@@ -56,13 +56,13 @@
         //znajdź data-id
         const idBook = bookImage.getAttribute('data-id');
         //sprwdz czy ksiazka  nie zawiera id oraz nie zawieta favorite
-        if(!favoriteBooks.includes(idBook) && bookImage.classList.contains(!classNames.books.favoriteBook)){
+        if(!favoriteBooks.includes(idBook)){
         //jeśli warunek prawdziy dodaj favorite
           bookImage.classList.add(classNames.books.favoriteBook);
           // jeśli warunek prawdziwy wyślij id do nowej tablicy
           favoriteBooks.push(idBook);
         // jeśli ksiazka zawiera id i zawiera favorite
-        } else if (favoriteBooks.includes(idBook) && bookImage.classList.contains(classNames.books.favoriteBook)){
+        } else {
           //znajdź indeks w tej tablicy
           const indexOfidBook = favoriteBooks.indexOf(idBook);
           //usuń indeks znaleziony
