@@ -13,6 +13,10 @@
     booksCover: {
       images: '.book__image',
     },
+    filtersOF: {
+      form: '.filters',
+    }
+
 
   };
   const classNames = {
@@ -49,6 +53,9 @@
     const booksContainer = document.querySelector(select.containerOf.booksList);
     const booksImage =booksContainer.querySelectorAll(select.booksCover.images);
     console.log(booksImage);
+    //znajdz filtry
+    const form = document.querySelector(select.filtersOF.form);
+    console.log('form', form);
     //pętla po każdym booksImage
     //for (const bookImage of booksImage) {
     //nasłuchiwacz uruchamiający dbclick i zatrzymujący domyślne zachowanie
@@ -76,7 +83,50 @@
       }
     });
     //}
-  }
-  initActions();
+    //dodaj eventListener do form
+    form.addEventListener('click', function(event){
+      //dodaj ify
+      if(event.target.tagName == 'INPUT' && event.target.type == 'checkbox' && event.target.name == 'filter'){
+        console.log(event.target.value);
+        if(event.target.checked == true){
+          filters.push(event.target.value);
+        } else if (event.target.checked == false){
+          const indexOfFilters =filters.indexOf(event.target.value);
+          filters.splice(indexOfFilters, 1);
+        }
+        console.log('filters', filters);
+        
+      }
+      filterBooks();
 
+    });
+  }
+  
+
+  const filters = [];
+  
+  function filterBooks(){
+    for(let book of dataSource.books){
+      let shouldBeHidden = false;
+
+      for(const filter of filters){
+        if(!book.details[filter]){
+          shouldBeHidden = true;
+          break;
+        }
+      }
+      const id = book.id;
+      console.log(id);
+       
+      const item = document.querySelector('.book__image[data-id="'+id+'"]');
+    
+      if(shouldBeHidden == true){
+        item.classList.add('hidden');
+      } else if (shouldBeHidden == false){
+        item.classList.remove('hidden');
+      }
+    }
+  }
+
+  initActions();
 }
