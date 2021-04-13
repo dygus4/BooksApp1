@@ -17,7 +17,8 @@
   };
   const classNames = {
     books: {
-      favoriteBook: 'favorite'
+      favoriteBook: 'favorite',
+      bookClass: 'book__image'
     },
   };
   const templates = {
@@ -47,31 +48,34 @@
     //referencja do listy wszystkich elementów .book_image w .booksList
     const booksContainer = document.querySelector(select.containerOf.booksList);
     const booksImage =booksContainer.querySelectorAll(select.booksCover.images);
+    console.log(booksImage);
     //pętla po każdym booksImage
-    for (const bookImage of booksImage) {
-      //nasłuchiwacz uruchamiający dbclick i zatrzymujący domyślne zachowanie
-      bookImage.addEventListener('dblclick', function(event){
-        event.preventDefault();
+    //for (const bookImage of booksImage) {
+    //nasłuchiwacz uruchamiający dbclick i zatrzymujący domyślne zachowanie
+    booksContainer.addEventListener('dblclick', function(event){
+      event.preventDefault();
+      if(event.target.offsetParent.classList.contains(classNames.books.bookClass)){
 
         //znajdź data-id
-        const idBook = bookImage.getAttribute('data-id');
+        const idBook = event.target.offsetParent.getAttribute('data-id');
         //sprwdz czy ksiazka  nie zawiera id oraz nie zawieta favorite
         if(!favoriteBooks.includes(idBook)){
         //jeśli warunek prawdziy dodaj favorite
-          bookImage.classList.add(classNames.books.favoriteBook);
+          event.target.offsetParent.classList.add(classNames.books.favoriteBook);
           // jeśli warunek prawdziwy wyślij id do nowej tablicy
           favoriteBooks.push(idBook);
-        // jeśli ksiazka zawiera id i zawiera favorite
+          // jeśli ksiazka zawiera id i zawiera favorite
         } else {
-          //znajdź indeks w tej tablicy
+        //znajdź indeks w tej tablicy
           const indexOfidBook = favoriteBooks.indexOf(idBook);
           //usuń indeks znaleziony
           favoriteBooks.splice(indexOfidBook, 1);
           //usuń klase favorite
-          bookImage.classList.remove(classNames.books.favoriteBook);
+          event.target.offsetParent.classList.remove(classNames.books.favoriteBook);
         }
-      });
-    }
+      }
+    });
+    //}
   }
   initActions();
 
